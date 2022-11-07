@@ -8,8 +8,8 @@ Como utilizar:
 * `git clone https://github.com/estebannoblega/WebSocket---TS.git`
 * Abrir una terminal en la carpeta.
 * Ejecutar: `npm i`
-* Inicializar el servidor: `ts-code server.ts NroPuerto`, en caso de no tener instalado ts-code, utilizar `tsc` y luego `node /build/server.js`.
-* Inicializar el cliente: `ts-code client.ts DireccionServer NroPuerto Usuario`, en caso de no tener instalado ts-code, utilizar `tsc` y luego `node /build/client.js`.
+* Inicializar el servidor: `ts-code server.ts NroPuerto`, en caso de no tener instalado ts-code, utilizar `tsc` y luego `node build/server.js`.
+* Inicializar el cliente: `ts-code client.ts DireccionServer NroPuerto Usuario`, en caso de no tener instalado ts-code, utilizar `tsc` y luego `node build/client.js`.
 
 # Referencias
 * https://www.npmjs.com/package/ws
