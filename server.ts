@@ -23,16 +23,6 @@ function escuchar(puerto:number){
     const servidor = new WebSocketServer({clientTracking:true,port:puerto});
 
     servidor.on('connection',(ws: WebSocket,req)=>{
-        // const ipCliente = req.socket.remoteAddress?.split(':');
-        // console.log(ipCliente);
-        // const dirCliente = `[${ipCliente![3]}:${req.socket.remotePort}]`;
-        //Mensaje de Bienvenida
-        //ws.send(`CONECTADO!... `);
-        const usuario = {
-            'user': '',
-            'ip': req.socket.remoteAddress,
-            'puerto':req.socket.remotePort
-        }
         //Manejo de la nueva conexion
         ws.on('message', (mensaje: string) => {
             if (!usuarios.has(ws)) {
@@ -42,12 +32,15 @@ function escuchar(puerto:number){
                 //         ws.close();
                 //     }
                 // });
+                const usuario = {
+                    'user': mensaje,
+                    'ip': req.socket.remoteAddress,
+                    'puerto':req.socket.remotePort
+                }
                 console.log("Usuario "+colors.bgGreen(`${mensaje}`)+" se ha conectado al SERVIDOR ");
-                usuario.user=mensaje;
                 usuarios.set(ws, usuario);
             } else if (mensaje == END) {
                 console.log(colors.red(`Desconectando cliente: ${usuarios.get(ws)['user']}`));
-                usuarios.delete(ws);
                 ws.close();
             } else {
                 //muestra el mensaje recibido
@@ -72,14 +65,14 @@ function escuchar(puerto:number){
             
             const { user, ip, puerto } = usuarios.get(ws);
             console.log(colors.bgYellow(`Conexión con [${ip.split(':')[3]}::${puerto}::${user}] cerrada`));
+            usuarios.delete(ws);
             if (servidor.clients.size <= 0) {
                 console.log(colors.italic('No hay clientes conectados'));
             }
 
-        })
+        });
     });
     servidor.on("error",(err)=>error(err.message));
-
 
 }
 // Define el comportamiento del WebSocket
